@@ -4,7 +4,7 @@
 
 # Installing dependencies.
 set -eux
-sudo apt-get update && apt-get -y --allow-change-held-packages upgrade
+sudo apt-get update && sudo apt-get -y --allow-change-held-packages upgrade
 sudo apt-get install -y --no-install-recommends \
     ca-certificates \
     wget \
