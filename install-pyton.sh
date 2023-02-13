@@ -4,8 +4,8 @@
 
 # Installing dependencies.
 set -eux
-apt-get update && apt-get -y --allow-change-held-packages upgrade
-apt-get install -y --no-install-recommends \
+sudo apt-get update && apt-get -y --allow-change-held-packages upgrade
+sudo apt-get install -y --no-install-recommends \
     ca-certificates \
     wget \
     build-essential \
@@ -26,7 +26,7 @@ apt-get install -y --no-install-recommends \
     libc6-dev \
     openssl \
     git
-rm -rf /var/lib/apt/lists/*
+
 
 # Downloading Python and compiling
 GPG_KEY=A035C8C19219BA821ECEA86B64E628F8D684696D
@@ -40,13 +40,13 @@ GNUPGHOME="$(mktemp -d)"
 #gpg --batch --verify python.tar.xz.asc python.tar.xz
 #command -v gpgconf > /dev/null && gpgconf --kill all || :
 #rm -rf "$GNUPGHOME" python.tar.xz.asc; \
-mkdir -p /usr/src/python
-tar --extract --directory /usr/src/python --strip-components=1 --file python.tar.xz
+mkdir -p ~/python-build
+tar --extract --directory ~/python-build --strip-components=1 --file python.tar.xz
 rm python.tar.xz
 
-mkdir -p /usr/local/python-${PYTHON_VERSION%%[a-z]*}
+sudo mkdir -p /usr/local/python-${PYTHON_VERSION%%[a-z]*}
 
-cd /usr/src/python
+cd ~/python-build
 gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
 ./configure \
     --build="$gnuArch" \
@@ -66,7 +66,7 @@ make -j "$nproc" \
     "PROFILE_TASK=${PROFILE_TASK:-}"
 
 # Installing
-make install
-mkdir /artifact
+sudo make install
+sudo mkdir /artifact
 
-tar cJf /artifact/${PYTHON_VERSION%%[a-z]*} .tar.xz /usr/local/python-${PYTHON_VERSION%%[a-z]*}
+sudo tar cJf /artifact/${PYTHON_VERSION%%[a-z]*} .tar.xz /usr/local/python-${PYTHON_VERSION%%[a-z]*}
