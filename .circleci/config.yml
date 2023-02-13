@@ -1,8 +1,10 @@
 version: 2.1
+
 jobs:
   build:
-    docker:
-      - image: arm64v8/debian:bullseye
+    machine:
+      image: uubuntu-2204:2022.10.2
+    resource_class: arm.large
     steps:
       - checkout
 
