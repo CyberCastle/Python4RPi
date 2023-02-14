@@ -64,4 +64,4 @@ make -j "$nproc" \
 sudo make altinstall -j $(nproc) < /dev/null
 sudo mkdir /artifact
 
-sudo tar cJf /artifact/${PYTHON_VERSION%%[a-z]*} .tar.xz /usr/local/python-${PYTHON_VERSION%%[a-z]*}
+sudo tar cJf /artifact/python-${PYTHON_VERSION%%[a-z]*}.tar.xz /usr/local/python-${PYTHON_VERSION%%[a-z]*}
