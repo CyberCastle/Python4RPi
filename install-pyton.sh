@@ -50,23 +50,18 @@ cd ~/python-build
 gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
 ./configure \
     --build="$gnuArch" \
-    --enable-loadable-sqlite-extensions \
     --enable-optimizations \
-    --enable-option-checking=fatal \
-    --enable-shared \
-    --with-lto \
-    --with-system-expat \
     --without-ensurepip \
-    --prefix=/usr/local/python-${PYTHON_VERSION%%[a-z]*}
+    --prefix=/usr/local/python-${PYTHON_VERSION%%[a-z]*} < /dev/null
 
 nproc="$(nproc)"
 make -j "$nproc" \
     "EXTRA_CFLAGS=${EXTRA_CFLAGS:-}" \
     "LDFLAGS=${LDFLAGS:-}" \
-    "PROFILE_TASK=${PROFILE_TASK:-}"
+    "PROFILE_TASK=${PROFILE_TASK:-}" < /dev/null
 
 # Installing
-sudo make install
+sudo make altinstall -j $(nproc) < /dev/null
 sudo mkdir /artifact
 
 sudo tar cJf /artifact/${PYTHON_VERSION%%[a-z]*} .tar.xz /usr/local/python-${PYTHON_VERSION%%[a-z]*}
