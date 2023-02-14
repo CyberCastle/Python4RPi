@@ -50,13 +50,18 @@ cd ~/python-build
 gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
 ./configure \
     --build="$gnuArch" \
+    --enable-loadable-sqlite-extensions \
     --enable-optimizations \
+    --enable-option-checking=fatal \
+    --enable-shared \
+    --with-lto \
+    --with-system-expat \
     --without-ensurepip \
     --prefix=/usr/local/python-${PYTHON_VERSION%%[a-z]*} < /dev/null
 
 nproc="$(nproc)"
 make -j "$nproc" \
-    "EXTRA_CFLAGS=${EXTRA_CFLAGS:-}" \
+    "EXTRA_CFLAGS=${EXTRA_CFLAGS:-} -march=native -mtune=native" \
     "LDFLAGS=${LDFLAGS:-}" \
     "PROFILE_TASK=${PROFILE_TASK:-}" < /dev/null
 
