@@ -72,7 +72,7 @@ make -j "$nproc" \
 
 # Fix "error while loading shared libraries" issue
 # More info: https://github.com/docker-library/python/issues/784
-rm python \
+rm python
 make -j "$nproc" \
     "EXTRA_CFLAGS=${EXTRA_CFLAGS:-}" \
     "LDFLAGS=${LDFLAGS:--Wl},-rpath='\$\$ORIGIN/../lib'" \
