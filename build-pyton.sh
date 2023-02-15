@@ -26,6 +26,7 @@ sudo apt-get install -y --no-install-recommends \
     libncursesw5-dev \
     libc6-dev \
     openssl \
+    gnupg \
     git
 
 
@@ -36,11 +37,14 @@ PYTHON_VERSION=3.11.2
 set -eux
 wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz"
 wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc"
+
+# Check the validity and integrity of the downloaded package
 GNUPGHOME="$(mktemp -d)"
-#gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$GPG_KEY"
-#gpg --batch --verify python.tar.xz.asc python.tar.xz
-#command -v gpgconf > /dev/null && gpgconf --kill all || :
-#rm -rf "$GNUPGHOME" python.tar.xz.asc; \
+gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys "$GPG_KEY"
+gpg --batch --verify python.tar.xz.asc python.tar.xz
+command -v gpgconf > /dev/null && gpgconf --kill all || :
+rm -rf "$GNUPGHOME" python.tar.xz.asc
+
 mkdir -p ~/python-build
 tar --extract --directory ~/python-build --strip-components=1 --file python.tar.xz
 rm python.tar.xz
