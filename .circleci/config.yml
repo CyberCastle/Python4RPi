@@ -12,7 +12,7 @@ jobs:
           name: Build Python
           command: |
             chmod u+x install-pyton.sh
-            ./install-pyton.sh
+            ./build-pyton.sh
 
       - store_artifacts:
           path: /artifact
