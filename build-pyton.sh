@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Using this docker image arm64v8/debian:bullseye, for bild python for RPi4.
+# This script is based on the following docker image:
+# https://github.com/docker-library/python/blob/master/3.11/buster/Dockerfile
 
 # Installing dependencies.
 set -eux
@@ -64,6 +65,15 @@ make -j "$nproc" \
     "EXTRA_CFLAGS=${EXTRA_CFLAGS:-} -march=native -mtune=native" \
     "LDFLAGS=${LDFLAGS:-}" \
     "PROFILE_TASK=${PROFILE_TASK:-}" < /dev/null
+
+# Fix "error while loading shared libraries" issue
+# More info: https://github.com/docker-library/python/issues/784
+rm python \
+make -j "$nproc" \
+    "EXTRA_CFLAGS=${EXTRA_CFLAGS:-}" \
+    "LDFLAGS=${LDFLAGS:--Wl},-rpath='\$\$ORIGIN/../lib'" \
+    "PROFILE_TASK=${PROFILE_TASK:-}" \
+    python
 
 # Installing
 sudo make altinstall -j $(nproc) < /dev/null
