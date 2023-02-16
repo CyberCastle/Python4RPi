@@ -58,10 +58,8 @@ gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"
     --enable-loadable-sqlite-extensions \
     --enable-optimizations \
     --enable-option-checking=fatal \
-    --enable-shared \
     --with-lto \
     --with-system-expat \
-    --without-ensurepip \
     --prefix=/usr/local/python-${PYTHON_VERSION%%[a-z]*} < /dev/null
 
 nproc="$(nproc)"
