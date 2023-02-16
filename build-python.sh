@@ -68,15 +68,6 @@ make -j "$nproc" \
     "LDFLAGS=${LDFLAGS:-}" \
     "PROFILE_TASK=${PROFILE_TASK:-}" < /dev/null
 
-# Fix "error while loading shared libraries" issue
-# More info: https://github.com/docker-library/python/issues/784
-rm python
-make -j "$nproc" \
-    "EXTRA_CFLAGS=${EXTRA_CFLAGS:-}" \
-    "LDFLAGS=${LDFLAGS:--Wl},-rpath='\$\$ORIGIN/../lib'" \
-    "PROFILE_TASK=${PROFILE_TASK:-}" \
-    python
-
 # Installing
 sudo make altinstall -j $(nproc) < /dev/null
 sudo mkdir /artifact
