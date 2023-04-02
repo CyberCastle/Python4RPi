@@ -1,6 +1,7 @@
 #!/bin/bash
 
-wget -O python-dist.tar.xz "https://output.circle-artifacts.com/output/job/ebca3f51-5ea5-4f65-8e4d-57725ef64642/artifacts/0/artifact/python-3.11.2.tar.xz"
+#TODO: Upload artifact to github
+#wget -O python-dist.tar.xz "https://output.circle-artifacts.com/output/job/ebca3f51-5ea5-4f65-8e4d-57725ef64642/artifacts/0/artifact/python-3.11.2.tar.xz"
 
 sudo tar --extract --directory /usr/local --strip-components=2 --file python-dist.tar.xz
 
