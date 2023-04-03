@@ -5,6 +5,7 @@
 
 # Installing dependencies.
 set -eux
+sudo sudo rm -Rf /boot/grub
 sudo apt-get update && sudo apt-get -y --allow-change-held-packages upgrade
 sudo apt-get install -y --no-install-recommends \
     ca-certificates \
